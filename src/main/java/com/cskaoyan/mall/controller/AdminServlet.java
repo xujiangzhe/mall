@@ -2,7 +2,8 @@ package com.cskaoyan.mall.controller;
 
 import com.cskaoyan.mall.model.Admin;
 import com.cskaoyan.mall.model.Result;
-import com.cskaoyan.mall.model.bo.AdminLoginBO;
+import com.cskaoyan.mall.model.User;
+import com.cskaoyan.mall.model.bo.*;
 import com.cskaoyan.mall.model.vo.AdminLoginVO;
 import com.cskaoyan.mall.service.AdminService;
 import com.cskaoyan.mall.service.AdminServiceImpl;
@@ -34,11 +35,74 @@ public class AdminServlet extends HttpServlet {
         if("login".equals(action)){
             login(request, response);
         }
+        else if ("addAdminss".equals(action)) {
+            addAdmins(request, response);
+        }
+        else if ("updateAdminss".equals(action)) {
+            updateAdmins(request, response);
+        }
+        else if ("getSearchAdmins".equals(action)) {
+            getSearchAdmins(request, response);
+        }
+        else if ("changePwd".contains(action)) {
+            changeAdminPwd(request, response);
+        }
+    }
 
+    private void changeAdminPwd(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String requestBody = HttpUtils.getRequestBody(request);
+        AdminPwdBO adminPwdBO = gson.fromJson(requestBody, AdminPwdBO.class);
+        if (StringUtils.isEmpty(adminPwdBO.getOldPwd()) || StringUtils.isEmpty(adminPwdBO.getNewPwd())
+                || StringUtils.isEmpty(adminPwdBO.getConfirmPwd())) {
+            response.getWriter().println(gson.toJson(Result.error("参数不能为空")));
+            return;
+        }
+        if (!adminPwdBO.getNewPwd().equals(adminPwdBO.getConfirmPwd())) {
+            response.getWriter().println(gson.toJson(Result.error("新密码与确认新密码不同")));
+            return;
+        }
+        int code = adminService.changePwd(adminPwdBO);
+        if (code == 200) {
+            response.getWriter().println(gson.toJson(Result.ok()));
+            return;
+        }
+        response.getWriter().println(gson.toJson(Result.error("修改失败")));
+    }
+
+    private void updateAdmins(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String requestBody = HttpUtils.getRequestBody(request);
+        AdminUpdateBO updateBO = gson.fromJson(requestBody, AdminUpdateBO.class);
+        int code = adminService.update(updateBO);
+        if (code == 200) {
+            response.getWriter().println(gson.toJson(Result.ok()));
+            return;
+        }
+        response.getWriter().println(gson.toJson(Result.error("更新失败")));
+    }
+
+    private void addAdmins(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String requestBody = HttpUtils.getRequestBody(request);
+        AdminAddBO addBO = gson.fromJson(requestBody, AdminAddBO.class);
+        int code = adminService.add(addBO);
+        if (code == 200) {
+            response.getWriter().println(gson.toJson(Result.ok()));
+            return;
+        }
+        response.getWriter().println(gson.toJson(Result.error("该账号不允许重复使用")));
+    }
+
+    private void getSearchAdmins(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String requestBody = HttpUtils.getRequestBody(request);
+        SearchAdminBO searchAdminBO = gson.fromJson(requestBody, SearchAdminBO.class);
+        if (StringUtils.isEmpty(searchAdminBO.getEmail()) && StringUtils.isEmpty(searchAdminBO.getNickname())) {
+            response.getWriter().println(gson.toJson(Result.error("输入内容不能为空")));
+            return;
+        }
+        List<Admin> admins = adminService.searchAdmins(searchAdminBO);
+        response.getWriter().println(gson.toJson(Result.ok(admins)));
     }
 
     private void login(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.setCharacterEncoding("utf-8");
         String requestBody = HttpUtils.getRequestBody(request);
         AdminLoginBO loginBO = gson.fromJson(requestBody, AdminLoginBO.class);
         //判断是否为空 StringUtils
@@ -63,6 +127,28 @@ public class AdminServlet extends HttpServlet {
         if("allAdmins".equals(action)){
             allAdmins(request, response);
         }
+        else if (action.contains("deleteAdmins")) {
+            deleteAdmins(request, response);
+        }
+        else if (action.contains("getAdminsInfo")) {
+            getAdminsInfo(request, response);
+        }
+    }
+
+    private void getAdminsInfo(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String id = request.getParameter("id");
+        Admin admin = adminService.getInfo(id);
+        response.getWriter().println(gson.toJson(Result.ok(admin)));
+    }
+
+    private void deleteAdmins(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String id = request.getParameter("id");
+        int code = adminService.delete(id);
+        if (code == 200) {
+            response.getWriter().println(gson.toJson(Result.ok()));
+            return;
+        }
+        response.getWriter().println(gson.toJson(Result.error("删除失败")));
     }
 
     private void allAdmins(HttpServletRequest request, HttpServletResponse response) throws IOException {
