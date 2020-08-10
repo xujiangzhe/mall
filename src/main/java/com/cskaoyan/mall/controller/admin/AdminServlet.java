@@ -1,4 +1,4 @@
-package com.cskaoyan.mall.controller;
+package com.cskaoyan.mall.controller.admin;
 
 import com.cskaoyan.mall.model.Admin;
 import com.cskaoyan.mall.model.Result;
@@ -16,6 +16,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
@@ -28,6 +29,9 @@ public class AdminServlet extends HttpServlet {
 
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        System.out.println(session.getId());
+
         System.out.println("dopost");
         ///api/admin/admin/login
         String requestURI = request.getRequestURI();
@@ -114,6 +118,7 @@ public class AdminServlet extends HttpServlet {
        int code =  adminService.login(loginBO);
         //返回响应结果
         if(code == 200){
+            request.getSession().setAttribute("username", loginBO.getEmail());
             response.getWriter().println(gson.toJson(Result.ok(new AdminLoginVO(loginBO.getEmail(),loginBO.getEmail()))));
             return;
         }
@@ -121,6 +126,9 @@ public class AdminServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        System.out.println(session.getId());
+
         System.out.println("doget");
         String requestURI = request.getRequestURI();
         String action = requestURI.replace("/api/admin/admin/", "");
