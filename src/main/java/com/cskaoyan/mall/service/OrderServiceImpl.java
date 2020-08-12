@@ -2,15 +2,16 @@ package com.cskaoyan.mall.service;
 
 import com.cskaoyan.mall.dao.OrdersDao;
 import com.cskaoyan.mall.dao.OrdersDaoImpl;
-import com.cskaoyan.mall.model.Id;
-import com.cskaoyan.mall.model.Orders;
-import com.cskaoyan.mall.model.Spec;
-import com.cskaoyan.mall.model.Type;
+import com.cskaoyan.mall.model.*;
+import com.cskaoyan.mall.model.bo.AddOrderBO;
 import com.cskaoyan.mall.model.bo.ChangeOrderBO;
 import com.cskaoyan.mall.model.bo.PageOrdersBO;
+import com.cskaoyan.mall.model.vo.OrderGoodsInfoVO;
 import com.cskaoyan.mall.model.vo.OrderVO;
 import com.cskaoyan.mall.model.vo.PageOrdersVO;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -59,4 +60,21 @@ public class OrderServiceImpl implements OrdersService {
     public void deleteOrder(String id) {
         ordersDao.deleteOrder(id);
     }
+
+    @Override
+    public List<OrderGoodsInfoVO> getOrderByState(String state, String nickname) {
+        return ordersDao.getOrderByState(state, nickname);
+    }
+
+    @Override
+    public void pay(String id) {
+        ordersDao.pay(id);
+    }
+
+    @Override
+    public void addOrder(AddOrderBO addOrderBO) {
+        ordersDao.addOrder(addOrderBO);
+    }
+
+
 }

@@ -4,17 +4,17 @@ public class Goods {
 
     private Integer id;
 
-    private String name;
-
     private String img;
 
-    private Integer typeId;
+    private String name;
 
     private Double price;
 
+    private Integer typeId;
+
     private Integer stockNum;
 
-    private String descr;
+    private String desc;
 
     public Integer getId() {
         return id;
@@ -64,24 +64,24 @@ public class Goods {
         this.stockNum = stockNum;
     }
 
-    public String getDescr() {
-        return descr;
+    public String getDesc() {
+        return desc;
     }
 
-    public void setDescr(String descr) {
-        this.descr = descr;
+    public void setDesc(String desc) {
+        this.desc = desc;
     }
 
     public Goods() {
     }
 
-    public Goods(Integer id, String name, String img, Integer typeId, Double price, Integer stockNum, String descr) {
+    public Goods(Integer id, String name, String img, Integer typeId, Double price, Integer stockNum, String desc) {
         this.id = id;
         this.name = name;
         this.img = img;
         this.typeId = typeId;
         this.price = price;
         this.stockNum = stockNum;
-        this.descr = descr;
+        this.desc = desc;
     }
 }

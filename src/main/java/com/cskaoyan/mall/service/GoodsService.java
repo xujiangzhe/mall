@@ -4,12 +4,10 @@ import com.cskaoyan.mall.model.Goods;
 import com.cskaoyan.mall.model.Spec;
 import com.cskaoyan.mall.model.Type;
 import com.cskaoyan.mall.model.bo.AddGoodsBO;
+import com.cskaoyan.mall.model.bo.AskGoodsMsgBO;
 import com.cskaoyan.mall.model.bo.DeleteSpecBO;
 import com.cskaoyan.mall.model.bo.ReplyBO;
-import com.cskaoyan.mall.model.vo.GoodsInfoVO;
-import com.cskaoyan.mall.model.vo.GoodsUpdateVO;
-import com.cskaoyan.mall.model.vo.NoReplyMsgVO;
-import com.cskaoyan.mall.model.vo.RepliedMsgVO;
+import com.cskaoyan.mall.model.vo.*;
 
 import java.util.List;
 
@@ -37,4 +35,14 @@ public interface GoodsService {
     List<RepliedMsgVO> repliedMsg();
 
     void reply(ReplyBO replyBO);
+
+    List<Goods> searchGoods(String keyword);
+
+    GoodsInfo2VO getGoodsInfo2(String id);
+
+    List<GoodsMsgVO> getGoodsMsg(String id);
+
+    CommentGoodsVO getGoodsComment(String id);
+
+    void askGoodsMsg(AskGoodsMsgBO askGoodsMsgBO);
 }

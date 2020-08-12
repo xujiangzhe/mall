@@ -16,6 +16,8 @@ public class Msg {
 
     private String createtime;
 
+    private String replytime;
+
     public Integer getId() {
         return id;
     }
@@ -72,10 +74,18 @@ public class Msg {
         this.createtime = createtime;
     }
 
+    public String getReplytime() {
+        return replytime;
+    }
+
+    public void setReplytime(String replytime) {
+        this.replytime = replytime;
+    }
+
     public Msg() {
     }
 
-    public Msg(Integer id, Integer userId, Integer goodsId, String content, String replyContent, Integer state, String createtime) {
+    public Msg(Integer id, Integer userId, Integer goodsId, String content, String replyContent, Integer state, String createtime, String replytime) {
         this.id = id;
         this.userId = userId;
         this.goodsId = goodsId;
@@ -83,5 +93,6 @@ public class Msg {
         this.replyContent = replyContent;
         this.state = state;
         this.createtime = createtime;
+        this.replytime = replytime;
     }
 }

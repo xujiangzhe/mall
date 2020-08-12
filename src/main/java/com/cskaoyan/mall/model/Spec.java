@@ -6,9 +6,9 @@ public class Spec {
 
     private String specName;
 
-    private String stockNum;
+    private Integer stockNum;
 
-    private String unitPrice;
+    private Double unitPrice;
 
     private int goodsId;
 
@@ -28,19 +28,19 @@ public class Spec {
         this.specName = specName;
     }
 
-    public String getStockNum() {
+    public Integer getStockNum() {
         return stockNum;
     }
 
-    public void setStockNum(String stockNum) {
+    public void setStockNum(Integer stockNum) {
         this.stockNum = stockNum;
     }
 
-    public String getUnitPrice() {
+    public Double getUnitPrice() {
         return unitPrice;
     }
 
-    public void setUnitPrice(String unitPrice) {
+    public void setUnitPrice(Double unitPrice) {
         this.unitPrice = unitPrice;
     }
 

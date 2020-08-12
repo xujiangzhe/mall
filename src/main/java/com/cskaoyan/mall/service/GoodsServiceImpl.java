@@ -6,10 +6,7 @@ import com.cskaoyan.mall.model.Goods;
 import com.cskaoyan.mall.model.Spec;
 import com.cskaoyan.mall.model.Type;
 import com.cskaoyan.mall.model.bo.*;
-import com.cskaoyan.mall.model.vo.GoodsInfoVO;
-import com.cskaoyan.mall.model.vo.GoodsUpdateVO;
-import com.cskaoyan.mall.model.vo.NoReplyMsgVO;
-import com.cskaoyan.mall.model.vo.RepliedMsgVO;
+import com.cskaoyan.mall.model.vo.*;
 
 import java.util.List;
 
@@ -98,6 +95,31 @@ public class GoodsServiceImpl implements GoodsService {
     @Override
     public void reply(ReplyBO replyBO) {
         goodsDao.reply(replyBO);
+    }
+
+    @Override
+    public List<Goods> searchGoods(String keyword) {
+        return goodsDao.searchGoods(keyword);
+    }
+
+    @Override
+    public GoodsInfo2VO getGoodsInfo2(String id) {
+        return goodsDao.getGoodsInfo2(id);
+    }
+
+    @Override
+    public List<GoodsMsgVO> getGoodsMsg(String id) {
+        return goodsDao.getGoodsMsg(id);
+    }
+
+    @Override
+    public CommentGoodsVO getGoodsComment(String id) {
+        return goodsDao.getGoodsComment(id);
+    }
+
+    @Override
+    public void askGoodsMsg(AskGoodsMsgBO askGoodsMsgBO) {
+        goodsDao.askGoodsMsg(askGoodsMsgBO);
     }
 
 }
